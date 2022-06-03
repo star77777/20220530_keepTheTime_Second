@@ -27,6 +27,7 @@ class SplashActivityh : BaseActivity() {
         myHandler.postDelayed({
             val myIntent :Intent
             myIntent=Intent(mContext, LoginActivity::class.java)
+            finish()
 
         },2500)
     }

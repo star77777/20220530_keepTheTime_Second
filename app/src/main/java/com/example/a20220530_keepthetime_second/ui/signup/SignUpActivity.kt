@@ -2,6 +2,7 @@ package com.example.a20220530_keepthetime_second.ui.signup
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
@@ -64,10 +65,10 @@ class SignUpActivity : BaseActivity() {
             isNickDupOk = false
         }
         binding.passwordEdt.addTextChangedListener {
-            isPwDupOk = false
+            isPwDupOk = (it.toString() == binding.pwDupEdt.text.toString())
         }
         binding.pwDupEdt.addTextChangedListener {
-            isPwDupOk = false
+            isPwDupOk = (it.toString() == binding.passwordEdt.text.toString())
         }
 
     }
@@ -78,7 +79,46 @@ class SignUpActivity : BaseActivity() {
 
     //    실제로 모든 조건 통과시 실행할 회원 가입 API
     fun signUp() {
-        Toast.makeText(mContext, "회원가입", Toast.LENGTH_SHORT).show()
+        val inputEmail = binding.emailEdt.text.toString()
+        val inputPw = binding.passwordEdt.text.toString()
+        val inputNick = binding.nickEdt.text.toString()
+
+        apiList.putRequestSignUp(
+            inputEmail,
+            inputPw,
+            inputNick
+        ).enqueue(object :Callback<BasicResponse>{
+            override fun onResponse(call: Call<BasicResponse>, response: Response<BasicResponse>) {
+              if(response.isSuccessful){
+                  val br=response.body()!!
+                  Toast.makeText(
+                      mContext,
+                      "${br.data.user.nick_name}님 가입을 환영합니다.",
+                      Toast.LENGTH_SHORT
+                  ).show()
+                  finish()
+              }
+                else {
+                  val errorBodyStr = response.errorBody()!!.string()
+                  val jsonObj = JSONObject(errorBodyStr)
+                  val code = jsonObj.getInt("code")
+                  val message = jsonObj.getString("message")
+
+                  if (code == 400) {
+                      Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show()
+                  } else {
+                      Log.e("회원가입", "errorCode : ${code}, message : ${message}")
+                  }
+              }
+            }
+
+            override fun onFailure(call: Call<BasicResponse>, t: Throwable) {
+
+            }
+
+
+        })
+       // Toast.makeText(mContext, "회원가입", Toast.LENGTH_SHORT).show()
     }
 
     fun dupCheck(type: String, value: String) {

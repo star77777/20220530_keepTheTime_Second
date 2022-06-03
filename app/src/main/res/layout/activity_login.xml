@@ -28,12 +28,13 @@
             android:layout_marginTop="10dp"
             android:text="비밀번호"/>
         <EditText
-            android:id="@+id/passwordBtn"
+            android:id="@+id/passwordEtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="비밀번호 입력"
             android:inputType="textPassword"/>
         <CheckBox
+            android:id="@+id/autoLoginCb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="자동로그인"/>
