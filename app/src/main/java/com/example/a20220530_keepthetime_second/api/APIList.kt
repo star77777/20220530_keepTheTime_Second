@@ -7,6 +7,8 @@ import retrofit2.http.*
 interface APIList {
 
     //    user
+    @GET("/user")
+    fun getRequestMyInfo(@Header("X-Http-Token") token : String) : Call<BasicResponse>
 
     @FormUrlEncoded
     @POST("/user")

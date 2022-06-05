@@ -1,5 +1,6 @@
 package com.example.a20220530_keepthetime_second.ui.main
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import com.example.a20220530_keepthetime_second.BaseActivity
@@ -19,8 +20,14 @@ class MainActivity : BaseActivity() {
 
     override fun setupEvents(){
 
+        binding.logoutBtn.setOnClickListener {
+            val myIntent= Intent(mContext,LoginActivity::class.java)
+            startActivity(myIntent)
+            finish()
+        }
     }
     override fun setValues(){
+
 
     }
 }
