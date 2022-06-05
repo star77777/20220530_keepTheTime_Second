@@ -8,6 +8,12 @@ interface APIList {
 
     //    user
 
+    @FormUrlEncoded
+    @POST("/user")
+    fun postRequestLogin (
+        @Field("email") email: String,
+        @Field("password") password : String,
+    ) : Call<BasicResponse>
 
     @FormUrlEncoded
     @PUT("/user")

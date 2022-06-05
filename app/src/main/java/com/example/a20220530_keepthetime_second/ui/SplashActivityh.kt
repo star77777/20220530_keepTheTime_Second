@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import androidx.activity.result.contract.ActivityResultContracts
 import com.example.a20220530_keepthetime_second.BaseActivity
 import com.example.a20220530_keepthetime_second.R
 import com.example.a20220530_keepthetime_second.ui.main.LoginActivity
@@ -25,8 +26,10 @@ class SplashActivityh : BaseActivity() {
         val myHandler = Handler(Looper.getMainLooper())
 
         myHandler.postDelayed({
+
             val myIntent :Intent
             myIntent=Intent(mContext, LoginActivity::class.java)
+            startActivity(myIntent)
             finish()
 
         },2500)
